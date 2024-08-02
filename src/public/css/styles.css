@@ -9,7 +9,7 @@
     .main-body {
     background-color: #F28487;
     color: white;
-    height: calc(100vh - 64px);
+    height: 100%;
     }
     .materialboxed-image {
     margin: 0 auto;
