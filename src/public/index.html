@@ -31,49 +31,82 @@
       </div>
     </nav>
 
-    <div class="container main-content">
-      <!-- Header -->
+    <div class="container">
       <header class="center-align">
-        <h1>Manage Your Tasks</h1>
+        <h4>Manage Your Tasks</h4>
         <p>Keep track of your daily tasks with ease</p>
       </header>
-
-      <!-- Main Content -->
       <main>
         <div class="row">
-          <div class="col md-12 center-align">
-            <a
-              class="waves-effect waves-light btn modal-trigger"
+          <div class="col md-12">
+            <button
+              class="waves-effect #1565c0 blue darken-3 btn modal-trigger"
               href="#addTaskModal"
-              >Add Task</a
             >
+              <i class="material-icons left">add</i>Add Task
+            </button>
             <table class="highlight centered responsive-table z-depth-2">
-              <thead class="blue darken-2 white-text">
+              <thead class="#1565c0 blue darken-3 white-text">
                 <tr>
-                  <th>Title</th>
+                  <th>Task</th>
                   <th>Details</th>
+                  <th>Due Date</th>
+                  <th>Priority</th>
                 </tr>
               </thead>
               <tbody id="task-table-body">
                 <!-- Rows will be inserted dynamicaly -->
               </tbody>
             </table>
+            <ul class="pagination">
+              <li class="disabled">
+                <a href="#!"><i class="material-icons">chevron_left</i></a>
+              </li>
+              <li class="active #1565c0 blue darken-3"><a href="#!">1</a></li>
+              <li class="waves-effect"><a href="#!">2</a></li>
+              <li class="waves-effect"><a href="#!">3</a></li>
+              <li class="waves-effect"><a href="#!">4</a></li>
+              <li class="waves-effect"><a href="#!">5</a></li>
+              <li class="waves-effect">
+                <a href="#!"><i class="material-icons">chevron_right</i></a>
+              </li>
+            </ul>
           </div>
         </div>
       </main>
     </div>
 
-    <!-- Modal Structure -->
+    <!-- Modal -->
     <div id="addTaskModal" class="modal">
       <div class="modal-content">
         <h4>Add a New Task</h4>
         <div class="input-field">
+          <i class="material-icons prefix"> task </i>
           <input id="task-name" type="text" />
           <label for="task-name">Task Name</label>
         </div>
         <div class="input-field">
-          <textarea id="task-details" class="materialize-textarea"></textarea>
+          <i class="material-icons prefix"> description </i>
+          <textarea
+            id="task-details"
+            class="materialize-textarea"
+            cols="5"
+          ></textarea>
           <label for="task-details">Task Details</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix"> calendar_month </i>
+          <input id="task-date" class="datepicker" placeholder="Select date" />
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix"> priority_high </i>
+          <select id="task-priority" name="options">
+            <option value="" disabled selected>Assign priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="critical">Critical</option>
+          </select>
         </div>
       </div>
       <div class="modal-footer">
@@ -88,10 +121,10 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="page-footer footer-copyright #1565c0 blue darken-3">
+    <footer
+      class="page-footer footer-copyright #1565c0 blue darken-3 center-align"
+    >
       © 2024 To-Do List
-      <a class="grey-text text-lighten-4 right" href="#">More Links</a>
     </footer>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"

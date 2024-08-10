@@ -1,62 +1,95 @@
-const tasks = [
-  { title: "Buy groceries", details: "Milk, Bread, Eggs, and Fruits" },
-  { title: "Workout", details: "30 minutes of cardio and strength training" },
-  {
-    title: "Finish project report",
-    details: "Complete the final report for the client project",
-  },
-];
+var task = {
+  title: String,
+  details: String,
+  dueDate: Date,
+  priority: String,
+};
 
-function addTaskToTable(title, details) {
+function addTasksToTable(data) {
   const tableBody = document.getElementById("task-table-body");
-  const row = `
-    <tr>
-      <td>${title}</td>
-      <td>${details}</td>
-    </tr>
-  `;
-  tableBody.innerHTML += row;
+  tableBody.innerHTML = "";
+  if (data.length != 0) {
+    data.forEach((task) => {
+      const row = `
+      <tr>
+        <td>${task.title}</td>
+        <td>${task.details}</td>
+        <td>${task.dueDate}</td>
+        <td>${task.priority}</td>
+      </tr>
+    `;
+      tableBody.innerHTML += row;
+    });
+  } else {
+    const row = `<tr class="center-align">--No record found--</tr>`;
+    tableBody.innerHTML += row;
+  }
 }
 
 const submitForm = () => {
-  let temp = {};
-  temp.name = $("#task-name").val();
-  temp.details = $("#task-details").val();
-  tasks.push(temp);
-  temp.name != ""
-    ? addTaskToTable(temp.name, temp.details)
-    : console.log("No task name provided");
-  temp.name = "";
-  temp.details = "";
-  cancelTask();
-  console.log("Form Data Submitted: ", tasks);
+  const task = {
+    title: $("#task-name").val(),
+    details: $("#task-details").val(),
+    dueDate: $("#task-date").val(),
+    priority: $("#task-priority").val(),
+  };
+  console.log(task);
+  postTask(task);
 };
 
 const cancelTask = () => {
   document.getElementById("task-name").value = "";
   document.getElementById("task-details").value = "";
+  document.getElementById("task-date").value = "";
+  document.getElementById("task-priority").value = "";
 };
 
-$(document).ready(function () {
-  const tableBody = document.getElementById("task-table-body");
-
-  tasks.forEach((task) => {
-    const row = `
-    <tr>
-      <td>${task.title}</td>
-      <td>${task.details}</td>
-    </tr>
-  `;
-    tableBody.innerHTML += row;
+const getList = () => {
+  $.get("api/to-do", (response) => {
+    if (response.statusCode == 200) {
+      addTasksToTable(response.data);
+    }
   });
+};
 
+function postTask(task) {
+  $.ajax({
+    url: "api/to-do",
+    type: "POST",
+    data: task,
+    success: (result) => {
+      if (result.statusCode == 201) {
+        //alert("New task created!");
+        var toastHTML =
+          '<span>New task created!</span><button onclick="undoTask()" class="btn-flat toast-action">Undo</button>';
+        M.toast({
+          html: toastHTML,
+          classes: "rounded, #00796b teal darken-2",
+          completeCallback: function () {
+            getList(), cancelTask();
+          },
+        });
+      }
+    },
+  });
+}
+
+function undoTask() {
+  console.log("Delete created task....");
+}
+
+$(document).ready(function () {
+  $(".datepicker").datepicker();
+  $("select").formSelect();
+  $(".modal").modal();
   $("#save-task").click(() => {
     submitForm();
   });
-
   $("#cancel-task").click(() => {
     cancelTask();
   });
-
-  $(".modal").modal();
+  // $("#undo-task").click(() => {
+  //   undoTask();
+  // });
+  getList();
 });
