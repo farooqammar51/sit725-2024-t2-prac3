@@ -14,12 +14,18 @@ const getList = (req, res) => {
 
 const postList = (req, res) => {
   let task = req.body;
+  if (!task.title) {
+    return res.status(400).json({
+      statusCode: 400,
+      message: "Task title is required",
+    });
+  }
   collection.postTask(task, (err, result) => {
     if (!err) {
-      res.json({
+      res.status(201).json({
         statusCode: 201,
         data: result,
-        messgae: "success",
+        message: "Task successfully added",
       });
     }
   });
