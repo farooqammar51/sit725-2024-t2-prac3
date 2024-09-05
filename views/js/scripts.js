@@ -93,3 +93,13 @@ $(document).ready(function () {
   // });
   getList();
 });
+
+let socket = io();
+socket.on("taskProgress", (progressUpdate) => {
+  console.log("===== Task Progress Update =====");
+  console.log("Task ID: " + progressUpdate.taskId);
+  console.log("Progress: " + progressUpdate.progress);
+  console.log("Message: " + progressUpdate.message);
+  console.log("Timestamp: " + new Date().toLocaleString());
+  console.log("===============================");
+});

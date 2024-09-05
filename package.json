@@ -4,8 +4,8 @@
   "description": "Task 3.2P",
   "main": "index.js",
   "scripts": {
-  "start": "node index.js",
-  "test": "mocha --reporter spec"
+    "start": "node index.js",
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "mocha": "^10.7.3",
     "mongodb": "^4.4.1",
     "mongoose": "^8.5.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "socket.io": "^4.7.5"
   }
 }
